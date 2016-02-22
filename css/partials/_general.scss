@@ -1,0 +1,21 @@
+ul {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+}
+
+/* Colors
+===================== */
+
+$brown-color: #D5B178;
+$btn-color: #770F07;
+$btn-text: #FCD144;
+
+
+
+ body {
+ 	max-width: 90%;
+ 	margin: 0 auto;
+ 	background-color: $brown-color;
+ }
