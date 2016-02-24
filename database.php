@@ -10,6 +10,7 @@
 ini_set('display_errors', 'On');
 
 
+
 try{
 	$dsn = "mysql:host=".DB_HOST.";dbname=".DB_NAME;
 	$db = new PDO($dsn, DB_USER, DB_PASS);
@@ -27,7 +28,7 @@ try{
 	die();
 }
 
-$classes = $results->fetchAll(PDO::FETCH_ASSOC);
+
 
 
 ?>

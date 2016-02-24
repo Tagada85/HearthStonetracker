@@ -11,6 +11,7 @@ a {
 $brown-color: #D5B178;
 $btn-color: #770F07;
 $btn-text: #FCD144;
+$purple-btn: #A420BD;
 
 
 
@@ -19,3 +20,53 @@ $btn-text: #FCD144;
  	margin: 0 auto;
  	background-color: $brown-color;
  }
+
+ .main-content {
+ 	max-width: 80%;
+ 	margin: 30px auto;
+ 	text-align: center; 
+ }
+
+ .btn {
+ 	float: left;
+ 	padding: 15px;
+ 	background-color: $purple-btn;
+ 	color: white;
+ 	border-radius: 10px;
+ 	font-size: 20px;
+ 	margin: 5px;
+ 	&:hover{
+ 		background-color: lighten($purple-btn, 5%);
+ 	}
+ }
+
+ .game-btn {
+ 	background-color: $btn-color;
+ 	&:hover{
+ 		background-color: lighten($btn-color, 5%);
+ 	}
+ }
+
+.deck_list::before,
+.form_container::before {
+ 	content: "";
+ 	display: table;
+ 	clear: both;
+ }
+
+ .message {
+ 	border: 2px solid black;
+ 	padding: 15px;
+ }
+
+ 
+
+ .display_data {
+ 	border-collapse: collapse;
+ 	font-size: 18px;
+ 	td, tr, th {
+ 		border: 1px solid black;
+ 		padding: 10px;
+ 	}
+ }
+

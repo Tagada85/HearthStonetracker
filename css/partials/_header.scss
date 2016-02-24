@@ -1,3 +1,9 @@
+header:after {
+	content: "";
+	display:table;
+	clear: both;
+}
+
 .nav-left {
 	float: left;
 	max-width: 40%;
@@ -28,3 +34,4 @@ nav {
 	}
 	
 }
+

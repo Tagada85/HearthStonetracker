@@ -11,6 +11,49 @@ body {
   margin: 0 auto;
   background-color: #D5B178; }
 
+.main-content {
+  max-width: 80%;
+  margin: 30px auto;
+  text-align: center; }
+
+.btn {
+  float: left;
+  padding: 15px;
+  background-color: #A420BD;
+  color: white;
+  border-radius: 10px;
+  font-size: 20px;
+  margin: 5px; }
+  .btn:hover {
+    background-color: #b724d3; }
+
+.game-btn {
+  background-color: #770F07; }
+  .game-btn:hover {
+    background-color: #8f1208; }
+
+.deck_list::before,
+.form_container::before {
+  content: "";
+  display: table;
+  clear: both; }
+
+.message {
+  border: 2px solid black;
+  padding: 15px; }
+
+.display_data {
+  border-collapse: collapse;
+  font-size: 18px; }
+  .display_data td, .display_data tr, .display_data th {
+    border: 1px solid black;
+    padding: 10px; }
+
+header:after {
+  content: "";
+  display: table;
+  clear: both; }
+
 .nav-left {
   float: left;
   max-width: 40%; }

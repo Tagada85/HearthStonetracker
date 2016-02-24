@@ -38,3 +38,6 @@ require_once 'database.php';
 			</nav>
 		</header>
 		<section class="main-content">
+			<a href="/new_user.php" class="btn">+ Create New User</a>
+			<a href="/new_game.php" class="btn game-btn">+ Add New Game</a>
+
