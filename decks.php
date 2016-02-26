@@ -50,4 +50,6 @@ if(!empty($_POST["name"]) || !empty($_POST["description"])){
 	</form>
 </div>
 
-
+<?php
+include 'inc/footer.php';
+?>

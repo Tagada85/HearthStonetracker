@@ -1,5 +1,8 @@
 <?php
 
+
+
+
 Class Game {
 	function __construct($db=NULL){
 		if(is_object($db)){
@@ -31,7 +34,7 @@ Class Game {
 			$stmt->execute();
 			$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			foreach($rows as $row){
-				echo "<option>".$row["Class_Name"]."</option>";
+				echo "<option>".$row["Class_Name"] . "</option>";
 			}
 		} 
 	}

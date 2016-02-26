@@ -16,6 +16,11 @@ body {
   margin: 30px auto;
   text-align: center; }
 
+.main-content::before {
+  content: "";
+  display: table;
+  clear: both; }
+
 .btn {
   float: left;
   padding: 15px;
@@ -79,6 +84,16 @@ nav {
     background-color: #5f0c06; }
 
 footer {
-  clear: both; }
+  clear: both;
+  border-top: 2px solid #770F07;
+  text-align: center; }
+  footer .contact-info li {
+    display: inline-block;
+    margin: 20px 5%; }
+  footer .contact-info a {
+    padding: 20px; }
+
+.fa {
+  color: black; }
 
 /*# sourceMappingURL=styles.css.map */

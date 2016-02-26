@@ -27,6 +27,12 @@ $purple-btn: #A420BD;
  	text-align: center; 
  }
 
+ .main-content::before {
+ 	content: "";
+ 	display: table;
+ 	clear: both;
+ }
+
  .btn {
  	float: left;
  	padding: 15px;

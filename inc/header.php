@@ -1,6 +1,8 @@
 <?php
 
-require_once 'database.php';
+session_start();
+
+require_once 'inc/usersClass.php';
 
 ?>
 
@@ -11,6 +13,7 @@ require_once 'database.php';
 	<head>
 		<title><?php echo 'A title'?></title>
 		<link rel="stylesheet" href="css/styles.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<meta charset="utf-8"> 
 	</head>
 	<body>
@@ -20,8 +23,13 @@ require_once 'database.php';
 					<img src="img/logo.png">
 				</a>
 			</div>
+			<!-- If the user is logged in -->
+			
 			<nav>
 				<ul class="navigation">
+					<?php 
+						if(isset($_SESSION["username"])):
+					?>
 					<li>
 						<a href="/index.php">Home</a>
 					</li>
@@ -32,12 +40,33 @@ require_once 'database.php';
 						<a href="/decks.php">Decks</a>
 					</li>
 					<li>
-						<a href="/contact.php">Contact</a>
+						<a href="http://www.damiencosset.com/contact.html">Contact</a>
 					</li>
+			<?php else: ?>
+					<!-- If not logged in, show these -->
+					<li>
+						<a href="/login.php">Log In</a>
+					</li>
+					<li>
+						<a href="/signup.php">Sign Up</a>
+					</li>
+			<?php endif; ?>
 				</ul>
 			</nav>
+			<?php 
+				if(isset($_SESSION["username"])){
+					echo "Connected as " .$_SESSION["username"];
+				}
+			?>
+
 		</header>
+		
+		<?php
+			if(isset($_SESSION["username"])){
+				echo "<a href='/new_game.php' class='btn game-btn'>+ Add New Game</a>";
+			}
+		?>
+		
 		<section class="main-content">
-			<a href="/new_user.php" class="btn">+ Create New User</a>
-			<a href="/new_game.php" class="btn game-btn">+ Add New Game</a>
+			
 
