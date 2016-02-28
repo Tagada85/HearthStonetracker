@@ -7,9 +7,9 @@ if(!empty($_POST["user_class"]) && !empty($_POST["opponent_class"]) && !empty($_
 	$class_opp = $_POST["opponent_class"];
 	$outcome = $_POST["outcome"];
 	$deck_used = $_POST["deck_used"];
-
+	$user = $_SESSION["username"];
 	$game = new Game;
-	$result = $game->createGame($class_used, $class_opp, $outcome, $deck_used);
+	$result = $game->createGame($class_used, $class_opp, $outcome, $deck_used, $user);
 	echo "<span class='message'>".$result."</span>";
 
 }

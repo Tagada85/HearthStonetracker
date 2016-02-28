@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+//session_destroy();
 require_once 'inc/usersClass.php';
 
 ?>
@@ -55,7 +55,11 @@ require_once 'inc/usersClass.php';
 			</nav>
 			<?php 
 				if(isset($_SESSION["username"])){
+					echo "<span>";
 					echo "Connected as " .$_SESSION["username"];
+					echo "   ";
+					echo "<a href='logout.php' class='logout'>Log out</a>";
+					echo "</span>";
 				}
 			?>
 
@@ -63,10 +67,12 @@ require_once 'inc/usersClass.php';
 		
 		<?php
 			if(isset($_SESSION["username"])){
+				
 				echo "<a href='/new_game.php' class='btn game-btn'>+ Add New Game</a>";
+				
 			}
 		?>
 		
 		<section class="main-content">
-			
+
 

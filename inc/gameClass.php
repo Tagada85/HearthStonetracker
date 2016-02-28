@@ -61,7 +61,15 @@ Class Game {
 		}
 	}
 
-	function createGame($class_used, $class_opp, $outcome, $deck_used){
+	function createGame($class_used, $class_opp, $outcome, $deck_used, $user){
+		
+		$sql = "SELECT User_ID AS theId FROM Users WHERE Username = '$user'";
+		if($stmt = $this->_db->prepare($sql)){
+			$stmt->execute();
+			$id = $stmt->fetch();
+			$user_id = $id["theId"];
+			
+		}
 		
 		$sql = "SELECT Deck_Class FROM Decks WHERE Deck_Name = '$deck_used'";
 		if($stmt = $this->_db->prepare($sql)){
@@ -76,7 +84,7 @@ Class Game {
 		}
 
 		$sql = "INSERT INTO Games VALUES (Game_ID = Game_ID + 1, '$class_used', '$deck_used',
-			'$class_opp', '$outcome')";
+			'$class_opp', '$outcome', '$user_id')";
 		if(!$stmt = $this->_db->query($sql)){
 			return "There was an error. Please try again.";
 		} else {

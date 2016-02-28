@@ -43,20 +43,33 @@ Class User {
 	}
 
 	function verifyLogIn($username, $password){
-		//$sql = "SELECT * FROM Users WHERE Username = '$username' AND Password = '$password'";
-		return $username;
+		$sql = "SELECT COUNT(*) AS theCount FROM Users WHERE Username = '$username' AND Password = '$password'";
+		if($stmt = $this->_db->prepare($sql)){
+			$stmt->execute();
+			$row = $stmt->fetch();
+			if($row["theCount"] != 1){
+				return "<span class='message'>Wrong password and/or username.</span>";
+			} else {
+				session_destroy();
+				session_start();
+				$_SESSION["username"] = $username;
+				$_SESSION["loggedIn"] = TRUE;
+				echo "<span class='message'>Welcome back! You are connected as ".$username."</span>";
+				header("location:/index.php");
+			}
+		}
 	}
 
 
-	function getStatsClass($filter_cl){
+	function getStatsClass($filter_cl, $user_id){
 		$sql_classes = "SELECT Class_Name FROM Classes";
 		$get_classes = $this->_db->prepare($sql_classes);
 		$get_classes->execute();
 		$classes = $get_classes->fetchAll(PDO::FETCH_ASSOC);
 
 		foreach($classes as $class) {
-			$sql_games_played = "SELECT COUNT(*) AS Games_Played FROM Games WHERE Class_Used = '$filter_cl' AND Class_Opp = '$class[Class_Name]'";
-			$sql_games_won = "SELECT COUNT(*) AS Games_Won FROM Games WHERE Class_Used = '$filter_cl' AND Outcome = 'win' AND Class_Opp = '$class[Class_Name]'";
+			$sql_games_played = "SELECT COUNT(*) AS Games_Played FROM Games WHERE Class_Used = '$filter_cl' AND Class_Opp = '$class[Class_Name]' AND User_Id = '$user_id'";
+			$sql_games_won = "SELECT COUNT(*) AS Games_Won FROM Games WHERE Class_Used = '$filter_cl' AND Outcome = 'win' AND Class_Opp = '$class[Class_Name]' AND User_Id = '$user_id'";
 			$number_games = $this->_db->prepare($sql_games_played);
 			$number_games->execute();
 			$row = $number_games->fetch();
@@ -76,43 +89,71 @@ Class User {
 		//return $results = [$games_played, $games_won, $wins_percent];
 	}
 
-	function getStatsDeck($filter_deck){
-		$sql_games_played = "SELECT COUNT(*) AS Games_Played FROM Games WHERE Deck_Used = '$filter_deck'";
-		$sql_games_won = "SELECT COUNT(*) AS Games_Won FROM Games WHERE Deck_Used = '$filter_deck' AND Outcome = 'win'";
-		$number_games = $this->_db->prepare($sql_games_played);
-		$number_games->execute();
-		$row = $number_games->fetch();
-		$games_played =  $row["Games_Played"];
+	function getStatsDeck($filter_deck, $user_id){
+
+		$sql_classes = "SELECT Class_Name FROM Classes";
+		$get_classes = $this->_db->prepare($sql_classes);
+		$get_classes->execute();
+		$classes = $get_classes->fetchAll(PDO::FETCH_ASSOC);
+
+		foreach($classes as $class){
+			$sql_games_played = "SELECT COUNT(*) AS Games_Played FROM Games WHERE Deck_Used = '$filter_deck' AND Class_Opp = '$class[Class_Name]' AND User_Id = '$user_id'";
+			$sql_games_won = "SELECT COUNT(*) AS Games_Won FROM Games WHERE Deck_Used = '$filter_deck' AND Class_Opp = '$class[Class_Name]' AND Outcome = 'win' AND User_Id = '$user_id'";
+			$number_games = $this->_db->prepare($sql_games_played);
+			$number_games->execute();
+			$row = $number_games->fetch();
+			$games_played =  $row["Games_Played"];
 
 
-		$won = $this->_db->prepare($sql_games_won);
-		$won->execute();
-		$row = $won->fetch();
-		$games_won = $row["Games_Won"];
-
-		$wins_percent = $games_won / $games_played * 100;
-		return $results = [$games_played, $games_won, $wins_percent];
+			$won = $this->_db->prepare($sql_games_won);
+			$won->execute();
+			$row = $won->fetch();
+			$games_won = $row["Games_Won"];
+			echo "vs ".$class["Class_Name"]." , Played " . $games_played . " and won ". $games_won . "<br>";
+		}
+			//$wins_percent = $games_won / $games_played * 100;
+			//return $results = [$games_played, $games_won, $wins_percent];
 
 	}
 
 
-	function getStatsDeckAndClass($filter_cl, $filter_deck){
-		$sql_games_played = "SELECT COUNT(*) AS Games_Played FROM Games WHERE Deck_Used = '$filter_deck' AND Class_Used = '$filter_cl'";
-		$sql_games_won = "SELECT COUNT(*) AS Games_Won FROM Games WHERE Deck_Used = '$filter_deck' AND Class_Used = '$filter_cl'  AND Outcome = 'win'";
-		$number_games = $this->_db->prepare($sql_games_played);
-		$number_games->execute();
-		$row = $number_games->fetch();
-		$games_played =  $row["Games_Played"];
+	function getStatsDeckAndClass($filter_cl, $filter_deck, $user_id){
+
+		$sql_classes = "SELECT Class_Name FROM Classes";
+		$get_classes = $this->_db->prepare($sql_classes);
+		$get_classes->execute();
+		$classes = $get_classes->fetchAll(PDO::FETCH_ASSOC);
 
 
-		$won = $this->_db->prepare($sql_games_won);
-		$won->execute();
-		$row = $won->fetch();
-		$games_won = $row["Games_Won"];
+		foreach($classes as $class){
+			$sql_games_played = "SELECT COUNT(*) AS Games_Played FROM Games WHERE Deck_Used = '$filter_deck' AND Class_Used = '$filter_cl' AND Class_Opp = '$class[Class_Name]' AND User_Id = '$user_id'";
+			$sql_games_won = "SELECT COUNT(*) AS Games_Won FROM Games WHERE Deck_Used = '$filter_deck' AND Class_Used = '$filter_cl' AND Class_Opp = '$class[Class_Name]'  AND Outcome = 'win' AND User_Id = '$user_id'";
+			$number_games = $this->_db->prepare($sql_games_played);
+			$number_games->execute();
+			$row = $number_games->fetch();
+			$games_played =  $row["Games_Played"];
 
-		$wins_percent = $games_won / $games_played * 100;
-		return $results = [$games_played, $games_won, $wins_percent];
 
+			$won = $this->_db->prepare($sql_games_won);
+			$won->execute();
+			$row = $won->fetch();
+			$games_won = $row["Games_Won"];
+			echo "vs ".$class["Class_Name"]." , Played " . $games_played . " and won ". $games_won . "<br>";
+
+		}
+	//	$wins_percent = $games_won / $games_played * 100;
+	//	return $results = [$games_played, $games_won, $wins_percent];
+
+	}
+
+	function getUserId($username){
+		$sql = "SELECT User_Id AS theId FROM Users WHERE Username = '$username'";
+		if($stmt = $this->_db->prepare($sql)){
+			$stmt->execute();
+			$id = $stmt->fetch();
+			$user_id = $id["theId"];
+			return $user_id;
+		}
 	}
 
 

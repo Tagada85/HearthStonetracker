@@ -15,7 +15,7 @@ if(!empty($_POST["username"]) && !empty($_POST["password"])){
 
 
 
-<form class="form_container">
+<form class="form_container" method="post" action="login.php">
 	<label for="username"> Username:
 		<input type="text" name="username" id="username">
 	</label>

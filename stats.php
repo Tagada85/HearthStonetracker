@@ -40,19 +40,23 @@ if(!empty($_POST["class_filter"]) && !empty($_POST["deck_filter"])){
 	$filter_cl = $_POST["class_filter"];
 	$filter_deck = $_POST["deck_filter"];
 	$user_stats = new User;
-	$display = $user_stats->getStatsDeckAndClass($filter_cl, $filter_deck);
+	$id = $user_stats->getUserId($_SESSION["username"]);
+	$display = $user_stats->getStatsDeckAndClass($filter_cl, $filter_deck, $id);
 }
 else if(!empty($_POST["class_filter"]) ){
 	 $filter_cl = $_POST["class_filter"];
 	 $filter_deck = "";
+	 $username = $_SESSION["username"];
 	 $user_stats = new User;
-	 $display = $user_stats->getStatsClass($filter_cl);
+	 $id = $user_stats->getUserId($username);
+	 $display = $user_stats->getStatsClass($filter_cl, $id);
 
 
 } else if(!empty($_POST["deck_filter"])){
 	 $filter_deck = $_POST["deck_filter"];
 	 $user_stats = new User;
-	 $display = $user_stats->getStatsDeck($filter_deck);
+	 $id = $user_stats->getUserId($_SESSION["username"]);
+	 $display = $user_stats->getStatsDeck($filter_deck, $id);
 
 } else {
 	$filter_cl = "";
