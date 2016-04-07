@@ -7,11 +7,13 @@ Class User {
 
 	private $_db;
 
+	//Dev  Database
+	
 	function __construct($db=NULL){
 		if(is_object($db)){
 			$this->_db = $db;
 		}else {
-			$this->_db = new PDO("mysql:host=localhost:3306;dbname=HearthStone", "root", "root");
+			$this->_db = new PDO("mysql:host=localhost;dbname=HearthStone", "root", "root");
 		}
 	}
 
@@ -48,14 +50,14 @@ Class User {
 			$stmt->execute();
 			$row = $stmt->fetch();
 			if($row["theCount"] != 1){
-				return "<span class='message'>Wrong password and/or username.</span>";
+				return FALSE;
 			} else {
 				session_destroy();
 				session_start();
 				$_SESSION["username"] = $username;
 				$_SESSION["loggedIn"] = TRUE;
 				echo "<span class='message'>Welcome back! You are connected as ".$username."</span>";
-				header("location:/index.php");
+				return TRUE;
 			}
 		}
 	}
@@ -80,7 +82,9 @@ Class User {
 			$won->execute();
 			$row = $won->fetch();
 			$games_won = $row["Games_Won"];
-			echo "vs ".$class["Class_Name"]." , Played " . $games_played . " and won ". $games_won . "<br>";
+			$games_lost = $games_played - $games_won;
+			$percent = $games_won / $games_played * 100;
+			echo "<tr><td>".$class["Class_Name"]."</td><td>".$games_played."</td><td>".$games_won."</td><td>".$games_lost."</td><td>".$percent."</td></tr>";
 		}
 
 
@@ -109,7 +113,9 @@ Class User {
 			$won->execute();
 			$row = $won->fetch();
 			$games_won = $row["Games_Won"];
-			echo "vs ".$class["Class_Name"]." , Played " . $games_played . " and won ". $games_won . "<br>";
+			$games_lost = $games_played - $games_won;
+			$percent = $games_won / $games_played * 100;
+			echo "<tr><td>".$class["Class_Name"]."</td><td>".$games_played."</td><td>".$games_won."</td><td>".$games_lost."</td><td>".$percent."</td></tr>";
 		}
 			//$wins_percent = $games_won / $games_played * 100;
 			//return $results = [$games_played, $games_won, $wins_percent];
@@ -138,7 +144,9 @@ Class User {
 			$won->execute();
 			$row = $won->fetch();
 			$games_won = $row["Games_Won"];
-			echo "vs ".$class["Class_Name"]." , Played " . $games_played . " and won ". $games_won . "<br>";
+			$games_lost = $games_played - $games_won;
+			$percent = $games_won / $games_played * 100;
+			echo "<tr><td>".$class["Class_Name"]."</td><td>".$games_played."</td><td>".$games_won."</td><td>".$games_lost."</td><td>".$percent."</td></tr>";
 
 		}
 	//	$wins_percent = $games_won / $games_played * 100;
@@ -147,7 +155,7 @@ Class User {
 	}
 
 	function getUserId($username){
-		$sql = "SELECT User_Id AS theId FROM Users WHERE Username = '$username'";
+		$sql = "SELECT User_ID AS theId FROM Users WHERE Username = '$username'";
 		if($stmt = $this->_db->prepare($sql)){
 			$stmt->execute();
 			$id = $stmt->fetch();
@@ -157,6 +165,13 @@ Class User {
 	}
 
 
+
+	function deleteGames($user_id){
+		$sql = "DELETE FROM Games WHERE User_ID = '$user_id'";
+		if($stmt = $this->_db->prepare($sql)){
+			$stmt->execute();
+		}
+	}
 }
 
 ?>

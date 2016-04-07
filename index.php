@@ -4,7 +4,9 @@ include 'inc/header.php';
 
 ?>
 
-<p>This application records your HearthStone games. </p>
+<h3>Welcome to HearthStone Tracker</h3>
+<p>This application records your HearthStone games. It was created with HTML, Sass, PHP and mySQL.<br>
+You can check my gitHub for the code. To get started, <a href="/signup.php">create an account</a>.</p>
 
 <?php
 

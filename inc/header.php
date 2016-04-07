@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 //session_destroy();
 require_once 'inc/usersClass.php';
@@ -19,7 +18,7 @@ require_once 'inc/usersClass.php';
 	<body>
 		<header>
 			<div class="nav-left">
-				<a href="/index.php">
+				<a href="/">
 					<img src="img/logo.png">
 				</a>
 			</div>
@@ -31,7 +30,7 @@ require_once 'inc/usersClass.php';
 						if(isset($_SESSION["username"])):
 					?>
 					<li>
-						<a href="/index.php">Home</a>
+						<a href="/">Home</a>
 					</li>
 					<li>
 						<a href="/stats.php">Stats</a>
@@ -39,9 +38,7 @@ require_once 'inc/usersClass.php';
 					<li>
 						<a href="/decks.php">Decks</a>
 					</li>
-					<li>
-						<a href="http://www.damiencosset.com/contact.html">Contact</a>
-					</li>
+					
 			<?php else: ?>
 					<!-- If not logged in, show these -->
 					<li>
@@ -51,6 +48,9 @@ require_once 'inc/usersClass.php';
 						<a href="/signup.php">Sign Up</a>
 					</li>
 			<?php endif; ?>
+					<li>
+						<a href="http://www.damiencosset.com/contact.html">Contact</a>
+					</li>
 				</ul>
 			</nav>
 			<?php 
@@ -58,7 +58,7 @@ require_once 'inc/usersClass.php';
 					echo "<span>";
 					echo "Connected as " .$_SESSION["username"];
 					echo "   ";
-					echo "<a href='logout.php' class='logout'>Log out</a>";
+					echo "<a href='/logout.php' class='logout'>Log out</a>";
 					echo "</span>";
 				}
 			?>

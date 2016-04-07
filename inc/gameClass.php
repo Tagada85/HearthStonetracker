@@ -4,11 +4,16 @@
 
 
 Class Game {
+
+	private $_db;
+
+	//Dev  Database
+	
 	function __construct($db=NULL){
 		if(is_object($db)){
 			$this->_db = $db;
 		}else {
-			$this->_db = new PDO("mysql:host=localhost:3306;dbname=HearthStone", "root", "root");
+			$this->_db = new PDO("mysql:host=localhost;dbname=HearthStone", "root", "root");
 		}
 	}
 		function createDeck($name, $class, $desc){
@@ -90,7 +95,9 @@ Class Game {
 		} else {
 			return "The game was successfully added!";
 		}
-	} 
+	}
+
+
 
 }
 

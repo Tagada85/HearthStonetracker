@@ -5,12 +5,20 @@ include 'inc/header.php';
 include 'inc/gameClass.php';
 
 
-
+//delete games
+if(isset($_POST["delete"])){
+	require_once('inc/usersClass.php');
+	$deleting = new User;
+	$username = $_SESSION['username'];
+	$user_id = $deleting->getUserId($username);
+	$deleting->deleteGames($user_id);
+	echo "<span class='message'>Games Deleted!</span>";
+}
 
 
 
 ?>
-
+<div class="message_container"></div>
 <form class="form_container" action="stats.php" method="post">
 	<h5>Filters:</h5>
 	<span>By Class: </span>
@@ -34,6 +42,19 @@ include 'inc/gameClass.php';
 	<input type="submit" value='GO'>
 </form>
 
+<form method="POST" action="#">
+	<input type="hidden" name="delete">
+	<input type="submit" value="Reset Games" name="Delete" class="danger"> 
+</form>
+
+<table class="display_data">
+	<thead>
+		<th>Against</th>
+		<th>Games Played</th>
+		<th>Games Won</th>
+		<th>Games Lost</th>
+		<th>% of Wins</th>
+	</thead>
 <?php
 
 if(!empty($_POST["class_filter"]) && !empty($_POST["deck_filter"])){
@@ -67,6 +88,25 @@ else if(!empty($_POST["class_filter"]) ){
 
 
 ?>
+
+</table>
+	
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>
+	
+
+	$(".danger").click(function(e){
+		var result = confirm('Are you sure? This will delete all your recorded games!');
+		if(result == false) {
+			e.preventDefault();
+		}
+	});
+
+
+</script>
+
+
+
 
 
 

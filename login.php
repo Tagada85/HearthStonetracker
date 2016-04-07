@@ -8,14 +8,20 @@ if(!empty($_POST["username"]) && !empty($_POST["password"])){
 	$password = $_POST["password"];
 	$user = new User;
 	$account = $user->verifyLogIn($username, $password);
-	echo $account;
+	if ($account == TRUE){
+		echo "<script>window.location.replace('/')</script>";
+	}else if($account == FALSE){
+		echo "<span class='message'>Wrong password and/or username.</span>";
+	}
 }
+
+
 
 ?>
 
 
 
-<form class="form_container" method="post" action="login.php">
+<form class="form_container" method="post" action="#">
 	<label for="username"> Username:
 		<input type="text" name="username" id="username">
 	</label>

@@ -18,7 +18,7 @@ if(!empty($_POST["username"])){
 ?>
 
 <h4>Create an Account:</h4>
-<form class="form_container" action="signup.php" method="post">
+<form class="form_container" action="#" method="post">
 	<label for="username"> Username:
 		<input type="text" id="username" name="username">
 	</label>
