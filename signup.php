@@ -7,6 +7,9 @@ if(!empty($_POST["username"])){
 	include_once('inc/usersClass.php');
 	$u = trim($_POST["username"]);
 	$email = trim($_POST["email"]);
+	if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+		die('Invalid Email Adress');
+	}
 	$password = $_POST["password"];
 
 	$users = new User;
@@ -41,6 +44,7 @@ if(!empty($_POST["username"])){
 
 
 <script>
+
 	var password = document.getElementById("password");
 	var confirm_password = document.getElementById("confirm_password");
 	var email = document.getElementById("email");

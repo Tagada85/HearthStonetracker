@@ -31,7 +31,18 @@ Class User {
 		}
 		$stmt->closeCursor();
 
-		$sql = "INSERT INTO Users VALUES (User_ID = User_ID + 1, '$u', '$password', '$email')";
+		//salt is a randomly generated number
+		$salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
+
+		$password = hash('sha256', $password . $salt); 
+
+		for($round = 0; $round < 65536; $round++) 
+        { 
+            $password = hash('sha256', $password . $salt); 
+        } 
+
+
+		$sql = "INSERT INTO Users VALUES (User_ID = User_ID + 1, '$u', '$password', '$email', '$salt')";
 		if(!$this->_db->query($sql)){
 			return "<span class='message'> Error! We couldn't create your account. Sorry for the inconvenience. Try again later.</span>";
 		} else {
@@ -45,22 +56,35 @@ Class User {
 	}
 
 	function verifyLogIn($username, $password){
-		$sql = "SELECT COUNT(*) AS theCount FROM Users WHERE Username = '$username' AND Password = '$password'";
+		$sql = "SELECT * FROM Users WHERE Username = '$username'";
 		if($stmt = $this->_db->prepare($sql)){
 			$stmt->execute();
 			$row = $stmt->fetch();
-			if($row["theCount"] != 1){
-				return FALSE;
-			} else {
-				session_destroy();
-				session_start();
-				$_SESSION["username"] = $username;
-				$_SESSION["loggedIn"] = TRUE;
-				echo "<span class='message'>Welcome back! You are connected as ".$username."</span>";
-				return TRUE;
-			}
-		}
+		} else{
+			return FALSE;
+		} 
+
+		$check_password = hash('sha256', $password . $row['salt']); 
+        for($round = 0; $round < 65536; $round++) 
+        { 
+            $check_password = hash('sha256', $check_password . $row['salt']); 
+        } 
+        var_dump($check_password);
+        var_dump($row['Password']);
+         
+        if($check_password === $row['Password']) {
+        	session_destroy();
+			session_start();
+			$_SESSION["username"] = $username;
+			$_SESSION["loggedIn"] = TRUE;
+			echo "<span class='message'>Welcome back! You are connected as ".$username."</span>";
+			return TRUE;
+        }
+
 	}
+			
+		
+	
 
 
 	function getStatsClass($filter_cl, $user_id){
@@ -117,8 +141,7 @@ Class User {
 			$percent = $games_won / $games_played * 100;
 			echo "<tr><td>".$class["Class_Name"]."</td><td>".$games_played."</td><td>".$games_won."</td><td>".$games_lost."</td><td>".$percent."</td></tr>";
 		}
-			//$wins_percent = $games_won / $games_played * 100;
-			//return $results = [$games_played, $games_won, $wins_percent];
+
 
 	}
 
@@ -149,9 +172,7 @@ Class User {
 			echo "<tr><td>".$class["Class_Name"]."</td><td>".$games_played."</td><td>".$games_won."</td><td>".$games_lost."</td><td>".$percent."</td></tr>";
 
 		}
-	//	$wins_percent = $games_won / $games_played * 100;
-	//	return $results = [$games_played, $games_won, $wins_percent];
-
+	
 	}
 
 	function getUserId($username){
