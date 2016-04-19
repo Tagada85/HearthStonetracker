@@ -20,15 +20,17 @@ if(!empty($_POST["username"]) && !empty($_POST["password"])){
 ?>
 
 
-
+<h2>Log in:</h2>
 <form class="form_container" method="post" action="#">
-	<label for="username"> Username:
-		<input type="text" name="username" id="username">
-	</label>
+	
+	<label for="username"> Username:</label>
+	<input type="text" name="username" id="username">
+	
 	<br><br>
-	<label for="password"> Password:
-		<input type="password" name="password" id="password">
-	</label>
+	
+	<label for="password"> Password:</label>
+	<input type="password" name="password" id="password">
+
 	<br><br>
 	<input type="submit" value="Log In">
 </form>

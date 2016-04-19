@@ -69,8 +69,6 @@ Class User {
         { 
             $check_password = hash('sha256', $check_password . $row['salt']); 
         } 
-        var_dump($check_password);
-        var_dump($row['Password']);
          
         if($check_password === $row['Password']) {
         	session_destroy();

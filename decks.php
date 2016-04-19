@@ -15,18 +15,6 @@ if(!empty($_POST["name"]) || !empty($_POST["description"])){
 
 ?>
 
-<div class="deck_list">
-	<table class="display_data">
-		<legend>Existing Decks</legend>
-		<th>Deck Name</th>
-		<th>Deck Class</th>
-		<th>Description</th>
-		<?php 
-			$decks = new Game;
-			$decks->getDecksTable();
-		?>
-	</table>
-</div>
 
 <div class="form_container">
 	<h3>Want to add a deck to the list? Fill in the form !</h3>
@@ -49,6 +37,20 @@ if(!empty($_POST["name"]) || !empty($_POST["description"])){
 		<input type="submit" value="Create Deck">
 	</form>
 </div>
+
+<div class="deck_list">
+	<h3>Existing decks :</h3>
+	<table class="display_data">
+		<th>Deck Name</th>
+		<th>Deck Class</th>
+		<th>Description</th>
+		<?php 
+			$decks = new Game;
+			$decks->getDecksTable();
+		?>
+	</table>
+</div>
+
 
 <?php
 include 'inc/footer.php';

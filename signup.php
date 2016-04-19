@@ -20,23 +20,31 @@ if(!empty($_POST["username"])){
 
 ?>
 
-<h4>Create an Account:</h4>
+<h2>Create an Account:</h2>
 <form class="form_container" action="#" method="post">
-	<label for="username"> Username:
-		<input type="text" id="username" name="username">
-	</label>
+	
+	<label for="username"> Username:	</label>
+	<input type="text" id="username" name="username">
+
+
 	<br><br>
-	<label for="email"> Email:
-		<input type="email" id="email" name="email">
-	</label>
+	
+	<label for="email"> Email:</label>
+	<input type="email" id="email" name="email">
+
+	
 	<br><br>
-	<label for="password"> Password:
-		<input type="password" id="password" name="password">
-	</label>
+	
+	<label for="password"> Password:</label>
+	<input type="password" id="password" name="password">
+
+	
 	<br><br>
-	<label for="confirm_password"> Confirm Password:
-		<input type="password" id="confirm_password" name="confirm_password">
-	</label>
+	
+	<label for="confirm_password"> Confirm Password:</label>
+	<input type="password" id="confirm_password" name="confirm_password">
+	
+	
 	<br><br>
 	<input type="submit" id="submit" value="Create Account">
 </form>

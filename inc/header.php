@@ -2,7 +2,7 @@
 session_start();
 //session_destroy();
 require_once 'inc/usersClass.php';
-
+$path = $_SERVER['REQUEST_URI'];
 ?>
 
 
@@ -10,7 +10,23 @@ require_once 'inc/usersClass.php';
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><?php echo 'A title'?></title>
+		<title><?php 
+			if($path == '/' || $path == '/index.php'){
+				echo 'Homepage';
+			}else if($path == '/stats.php'){
+				echo 'Statistics';
+			}else if($path == '/decks.php'){
+				echo 'Decks';
+			}else if($path == '/new_game.php'){
+				echo 'Add a game';
+			} else if($path == '/login.php'){
+				echo 'Log In';
+			}else if($path == '/signup.php'){
+				echo 'Create a Account';
+			}
+		?></title>
+		<link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+		<link href='https://fonts.googleapis.com/css?family=Nunito:400,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="css/styles.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<meta charset="utf-8"> 
